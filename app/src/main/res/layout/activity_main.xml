@@ -1,0 +1,42 @@
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context=".MainActivity">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar"
+        ></include>
+
+    <it.neokree.materialtabs.MaterialTabHost
+        android:id="@+id/materialTabHost"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:iconColor="@color/abc_primary_text_disable_only_material_dark"
+        app:primaryColor="@color/ColorPrimary"
+        app:accentColor="@color/accent_material_dark"
+        app:hasIcons="true"/>
+    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+        android:layout_below="@+id/materialTabHost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_swipe" >
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+
+
+   />
+    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
+
+</LinearLayout>
+
+
