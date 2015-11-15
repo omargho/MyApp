@@ -53,6 +53,7 @@ public static final int MOVIES_HITS=0;
         setSupportActionBar(toolbar);
         tabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
+        boolean aaa=false;
 
         pager = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pager);
