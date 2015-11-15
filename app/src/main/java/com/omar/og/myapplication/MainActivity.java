@@ -11,7 +11,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
@@ -104,14 +103,7 @@ public static final int MOVIES_HITS=0;
                         // ...
                 .attachTo(actionButton)
                 .build();
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                ((FragmentBoxOffice) pager.instantiateItem(viewPager, viewPager.getCurrentItem())).sortMe();
-            }
-        });
-
+      
         /*
         for action we can make the main activity implement View.OnClickListener and place into it methods executed from different fragment
         and in the method on click "onClick(View v)" we create a instance of the runned fragment
