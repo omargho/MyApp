@@ -2,4 +2,7 @@
         <resources>
             <color name="ColorPrimary">#FF5722</color>
             <color name="ColorPrimaryDark">#E64A19</color>
+    <color name="myDrawerBackground">#FFF</color>
+    <color name="myWindowBackground">#FFF</color>
+    <color name="myAccentColor">#FF4081</color>
         </resources>

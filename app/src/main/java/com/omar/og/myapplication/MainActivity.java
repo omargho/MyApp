@@ -1,5 +1,8 @@
 package com.omar.og.myapplication;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,12 +10,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
@@ -27,12 +32,12 @@ import it.neokree.materialtabs.MaterialTabListener;
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 
-public class MainActivity extends ActionBarActivity implements MaterialTabListener { /* When using Appcombat support library
+public class MainActivity extends ActionBarActivity implements MaterialTabListener,NavigationDrawerCallbacks { /* When using Appcombat support library
                                                          you need to extend Main Activity to
                                                          ActionBarActivity.
                                                       */
 
-
+    private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar toolbar;                              // Declaring the Toolbar Object
     private MaterialTabHost tabHost;
 
@@ -47,10 +52,33 @@ public static final int MOVIES_HITS=0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.fragment_drawer);
+        mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), toolbar);
+        // populate the navigation drawer
+        mNavigationDrawerFragment.setUserData("Ghorbel Omar", "omar_gho@yahoo.fr", BitmapFactory.decodeResource(getResources(), R.drawable.ic_home_black_24dp));
+
+
+
+        //get accounts gmail , yahoo, ...
+        AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+        Account[] list = manager.getAccounts();
+        for (Account account : list) {
+
+            String possibleEmail = account.name;
+            String type = account.type;
+            Toast.makeText(this,possibleEmail+"type "+type,Toast.LENGTH_LONG).show();
+
+         }
+
+
+
+
+
+
         tabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
 
@@ -141,6 +169,11 @@ public static final int MOVIES_HITS=0;
 
 
         }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        Toast.makeText(this, "Menussss item selected -> " + position, Toast.LENGTH_SHORT).show();
+    }
 
 
     private class Task extends AsyncTask<Void, Void, String[]> {
