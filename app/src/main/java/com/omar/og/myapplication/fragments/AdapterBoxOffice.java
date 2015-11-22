@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.omar.og.myapplication.Movie;
 import com.omar.og.myapplication.R;
 import com.omar.og.myapplication.VolleySingelton;
+import com.omar.og.myapplication.toParse.Accomodation;
 
 import java.util.ArrayList;
 
@@ -27,16 +27,16 @@ public class AdapterBoxOffice extends RecyclerView.Adapter<AdapterBoxOffice.View
    public LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     private VolleySingelton volleySingleton;
-    private ArrayList<Movie> listMovies = new ArrayList<>();
+    private ArrayList<Accomodation> listAcco = new ArrayList<>();
     public  AdapterBoxOffice(Context context){
 layoutInflater=LayoutInflater.from(context);
         volleySingleton = VolleySingelton.getInstance();
-        imageLoader = volleySingleton.getImageLoader();
+        //imageLoader = volleySingleton.getImageLoader();
     }
 
-    public void setMovies(ArrayList<Movie> listMovies) {
-        this.listMovies = listMovies;
-        notifyItemRangeChanged(0, listMovies.size());
+    public void setMovies(ArrayList<Accomodation> listAcco) {
+        this.listAcco = listAcco;
+        notifyItemRangeChanged(0, listAcco.size());
     }
 
     @Override
@@ -48,26 +48,25 @@ layoutInflater=LayoutInflater.from(context);
 
     @Override
     public void onBindViewHolder(ViewHolderBoxOffice holder, int position) {
-        Movie currentMovie = listMovies.get(position);
-        holder.movieTitle.setText(currentMovie.getTitle());
-        String movieReleaseDate = currentMovie.getReleaseDateTheatre();
+        Accomodation currentAcco = listAcco.get(position);
+        holder.movieTitle.setText(currentAcco.name);
 
-            holder.movieReleaseDate.setText(movieReleaseDate.toString());
+            holder.movieReleaseDate.setText(currentAcco.contact);
 
 
-        int audienceScore = currentMovie.getAudienceScore();
-        if (audienceScore == -1) {
-            holder.movieAudienceScore.setRating(0.0F);
-            holder.movieAudienceScore.setAlpha(0.5F);
-        } else {
-            holder.movieAudienceScore.setRating(audienceScore / 20.0F);
-            holder.movieAudienceScore.setAlpha(1.0F);
-        }
+//        int audienceScore = currentMovie.getAudienceScore();
+//        if (audienceScore == -1) {
+//            holder.movieAudienceScore.setRating(0.0F);
+//            holder.movieAudienceScore.setAlpha(0.5F);
+//        } else {
+//            holder.movieAudienceScore.setRating(audienceScore / 20.0F);
+//            holder.movieAudienceScore.setAlpha(1.0F);
+//        }
 
-     String url = currentMovie.getUrlThumbnail();
-        if(url!=null&&!url.equals(""))
-        { //Toast.makeText(MyApplication.getAppContext(), url, Toast.LENGTH_SHORT).show();
-      loadImages(url, holder);}
+//     String url = currentMovie.getUrlThumbnail();
+//        if(url!=null&&!url.equals(""))
+//        { //Toast.makeText(MyApplication.getAppContext(), url, Toast.LENGTH_SHORT).show();
+//      loadImages(url, holder);}
 
     }
 
@@ -91,7 +90,7 @@ layoutInflater=LayoutInflater.from(context);
 
     @Override
     public int getItemCount() {
-        return listMovies.size();
+        return listAcco.size();
     }
 
     static class ViewHolderBoxOffice extends RecyclerView.ViewHolder {

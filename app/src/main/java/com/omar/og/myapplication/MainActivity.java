@@ -1,7 +1,5 @@
 package com.omar.og.myapplication;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -15,7 +13,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -63,16 +60,16 @@ public static final int MOVIES_HITS=0;
 
 
 
-        //get accounts gmail , yahoo, ...
-        AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
-        Account[] list = manager.getAccounts();
-        for (Account account : list) {
-
-            String possibleEmail = account.name;
-            String type = account.type;
-            Toast.makeText(this,possibleEmail+"type "+type,Toast.LENGTH_LONG).show();
-
-         }
+//        //get accounts gmail , yahoo, ...
+//        AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+//        Account[] list = manager.getAccounts();
+//        for (Account account : list) {
+//
+//            String possibleEmail = account.name;
+//            String type = account.type;
+//            Toast.makeText(this,possibleEmail+"type "+type,Toast.LENGTH_LONG).show();
+//
+//         }
 
 
 
@@ -131,13 +128,13 @@ public static final int MOVIES_HITS=0;
                         // ...
                 .attachTo(actionButton)
                 .build();
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                ((FragmentBoxOffice) pager.instantiateItem(viewPager, viewPager.getCurrentItem())).sortMe();
-            }
-        });
+//        button2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                ((FragmentBoxOffice) pager.instantiateItem(viewPager, viewPager.getCurrentItem())).sortMe();
+//            }
+//        });
 
         /*
         for action we can make the main activity implement View.OnClickListener and place into it methods executed from different fragment

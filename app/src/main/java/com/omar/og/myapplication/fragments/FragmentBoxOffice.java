@@ -17,10 +17,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.omar.og.myapplication.MainActivity;
-import com.omar.og.myapplication.Movie;
 import com.omar.og.myapplication.MyApplication;
 import com.omar.og.myapplication.R;
 import com.omar.og.myapplication.VolleySingelton;
+import com.omar.og.myapplication.toParse.Accomodation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,23 +29,21 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 
-public class FragmentBoxOffice extends Fragment implements MovieSort {
+public class FragmentBoxOffice extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String BOXOFFICE_URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json";
+    private static final String BOXOFFICE_URL = "http://51.255.40.20/accommodation/";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private VolleySingelton volleySingelton;
     private ImageLoader imageLoader;
     private RequestQueue requestQueue;
-    private ArrayList<Movie> myMovies=new ArrayList<>();
+    private ArrayList<Accomodation> myAcco=new ArrayList<>();
     private DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
     private static AdapterBoxOffice adapterBoxOffice;
 private RecyclerView recyclerView;
@@ -73,15 +71,15 @@ private RecyclerView recyclerView;
         return fragment;
     }
 
-    public static String getRequestUrl(int limit) {
-        return BOXOFFICE_URL + "?apikey=" + MyApplication.KEY_TOMATO + "&limit=" + limit;
+    public static String getRequestUrl(String city) {
+        return BOXOFFICE_URL + city;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        Toast.makeText(getActivity(),"faragment refresh box office",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getActivity(),"faragment refresh box office",Toast.LENGTH_SHORT).show();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -95,11 +93,12 @@ private RecyclerView recyclerView;
     }
 
     public void sendJsonRequest() {
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, getRequestUrl(20), new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, getRequestUrl(""), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                myMovies=parseJsonResponse(response);
-                adapterBoxOffice.setMovies(myMovies);
+              myAcco=parseJsonResponse(response);
+               adapterBoxOffice.setMovies(myAcco);
+             //   Toast.makeText(MyApplication,response.toString(),Toast.LENGTH_LONG).show();
 
             }
         }, new Response.ErrorListener() {
@@ -112,34 +111,46 @@ private RecyclerView recyclerView;
 
     }
 
-    private ArrayList<Movie> parseJsonResponse(JSONObject response) {
-        ArrayList<Movie> myMov=new ArrayList<Movie>();
+    private ArrayList<Accomodation> parseJsonResponse(JSONObject response) {
+        ArrayList<Accomodation> myMov=new ArrayList<Accomodation>();
 
         try {
              ss = new StringBuilder();
-            JSONArray arrayMovies = response.getJSONArray("movies");
-            for (int i = 0; i < arrayMovies.length(); i++) {
-                JSONObject movie = (JSONObject) arrayMovies.get(i);
-                String id = movie.getString("id");
-                String title = movie.getString("title");
-                JSONObject objectreleaseDate = movie.getJSONObject("release_dates");
-                String relaseDate;
-                if (objectreleaseDate.has("theater"))
-                    relaseDate = objectreleaseDate.getString("theater");
-                else
-                    relaseDate = "no available data";
-                JSONObject ratingObject = movie.getJSONObject("ratings");
-                int rating = -1;
-                if (ratingObject.has("audience_score"))
-                    rating = ratingObject.getInt("audience_score");
-                else if (ratingObject.has("critics_score"))
-                    rating = ratingObject.getInt("critics_score");
-                String synapsis =movie.getString("synopsis");
-                JSONObject urls=movie.getJSONObject("posters");
-                String url=urls.getString("thumbnail");
+            JSONArray accommodations = response.getJSONArray("accommodation");
+            for (int i = 0; i < accommodations.length(); i++) {
+                JSONObject accommodation = (JSONObject) accommodations.get(i);
+                String address = accommodation.getString("address");
+
+                String city = accommodation.getString("city");
+                Toast.makeText(MyApplication.getAppContext(),city,Toast.LENGTH_LONG).show();
+                String name = accommodation.getString("name");
+                String website = accommodation.getString("website");
+                String type = accommodation.getString("type");
+                boolean availability=accommodation.getString("availability").equals("1");
+                JSONObject location=accommodation.getJSONObject("location");
+                String lonng=location.getString("long");
+                String lat=location.getString("lat");
+                String contact = accommodation.getString("contact");
+                String id = accommodation.getString("id");
+//                JSONObject objectreleaseDate = accommodation.getJSONObject("release_dates");
+//                String relaseDate;
+//                if (objectreleaseDate.has("theater"))
+//                    relaseDate = objectreleaseDate.getString("theater");
+//                else
+//                    relaseDate = "no available data";
+//                JSONObject ratingObject = accommodation.getJSONObject("ratings");
+//                int rating = -1;
+//                if (ratingObject.has("audience_score"))
+//                    rating = ratingObject.getInt("audience_score");
+//                else if (ratingObject.has("critics_score"))
+//                    rating = ratingObject.getInt("critics_score");
+//                String synapsis =movie.getString("synopsis");
+//                JSONObject urls=movie.getJSONObject("posters");
+//                String url=urls.getString("thumbnail");
                 //Toast.makeText(getActivity(),url,Toast.LENGTH_SHORT).show();
                 //java.util.Date rlaseDate=dateFormat.parse(relaseDate);
-                myMov.add(new Movie("", id, title, relaseDate, rating, synapsis, url, "", "", ""));
+
+                myMov.add(new Accomodation(type,name,lonng,lat,contact,id,city,address,website));
 
 
 
@@ -178,22 +189,22 @@ recyclerView= (RecyclerView) mView.findViewById(R.id.moviesList);
 
     }
 
-    private void sortMovies(ArrayList<Movie> x){
-        Collections.sort(x, new Comparator<Movie>() {
-            @Override
-            public int compare(Movie t0, Movie t1) {
-                return (t1.getAudienceScore() <= t0.getAudienceScore()) ? -1 : 1;
-            }
-        });
-        adapterBoxOffice.setMovies(x);
-    }
+//    private void sortMovies(ArrayList<Movie> x){
+//        Collections.sort(x, new Comparator<Movie>() {
+//            @Override
+//            public int compare(Movie t0, Movie t1) {
+//                return (t1.getAudienceScore() <= t0.getAudienceScore()) ? -1 : 1;
+//            }
+//        });
+//        adapterBoxOffice.setMovies(x);
+//    }
 
 
-    @Override
-    public void sortMe() {
-       sortMovies(myMovies);
-
-    }
+//    @Override
+////    public void sortMe() {
+////        sortMovies(myMovies);
+////
+////    }
 }
 
 
