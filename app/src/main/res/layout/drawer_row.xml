@@ -17,7 +17,7 @@
         android:layout_marginStart="16dp"
         android:drawablePadding="16dp"
         android:gravity="center_vertical"
-        android:textColor="@color/myAccentColor"
+        android:textColor="@color/abc_input_method_navigation_guard"
         android:textSize="14sp"
         android:layout_weight="0"/>
 

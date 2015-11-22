@@ -1,6 +1,5 @@
 package com.omar.og.myapplication;
 
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -56,7 +55,7 @@ public static final int MOVIES_HITS=0;
                 getFragmentManager().findFragmentById(R.id.fragment_drawer);
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), toolbar);
         // populate the navigation drawer
-        mNavigationDrawerFragment.setUserData("Ghorbel Omar", "omar_gho@yahoo.fr", BitmapFactory.decodeResource(getResources(), R.drawable.ic_home_black_24dp));
+       // mNavigationDrawerFragment.setUserData("Ghorbel Omar", "omar_gho@yahoo.fr", BitmapFactory.decodeResource(getResources(), R.drawable.ic_home_black_24dp));
 
 
 

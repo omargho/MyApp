@@ -118,12 +118,15 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
     public List<NavigationItem> getMenu() {
         List<NavigationItem> items = new ArrayList<NavigationItem>();
-        items.add(new NavigationItem("0", getResources().getDrawable(R.drawable.button_action_dark_touch)));
-        items.add(new NavigationItem("1", getResources().getDrawable(R.drawable.button_action_dark_touch)));
-        items.add(new NavigationItem("2", getResources().getDrawable(R.drawable.button_action_dark_touch)));
-        items.add(new NavigationItem("3", getResources().getDrawable(R.drawable.button_action_dark_touch)));
-        items.add(new NavigationItem("4", getResources().getDrawable(R.drawable.button_action_dark_touch)));
-        items.add(new NavigationItem("5", getResources().getDrawable(R.drawable.button_action_dark_touch)));
+        items.add(new NavigationItem("Accomodation", getResources().getDrawable(R.drawable.ic_home_black_24dp)));
+        items.add(new NavigationItem("car Rental Agency", getResources().getDrawable(R.drawable.ic_home_black_24dp)));
+        items.add(new NavigationItem("Police Station", getResources().getDrawable(R.drawable.ic_home_black_24dp)));
+        items.add(new NavigationItem("Post office", getResources().getDrawable(R.drawable.ic_home_black_24dp)));
+        items.add(new NavigationItem("Health care", getResources().getDrawable(R.drawable.ic_home_black_24dp)));
+        items.add(new NavigationItem("event", getResources().getDrawable(R.drawable.ic_home_black_24dp)));
+        items.add(new NavigationItem("service", getResources().getDrawable(R.drawable.ic_home_black_24dp)));
+        items.add(new NavigationItem("shopping", getResources().getDrawable(R.drawable.ic_home_black_24dp)));
+        items.add(new NavigationItem("gastronomy", getResources().getDrawable(R.drawable.ic_home_black_24dp)));
         return items;
     }
 

@@ -1,6 +1,7 @@
 package com.omar.og.myapplication.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +18,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.omar.og.myapplication.MainActivity;
-import com.omar.og.myapplication.MyApplication;
 import com.omar.og.myapplication.R;
+import com.omar.og.myapplication.SampleActivity;
 import com.omar.og.myapplication.VolleySingelton;
 import com.omar.og.myapplication.toParse.Accomodation;
 
@@ -122,7 +123,7 @@ private RecyclerView recyclerView;
                 String address = accommodation.getString("address");
 
                 String city = accommodation.getString("city");
-                Toast.makeText(MyApplication.getAppContext(),city,Toast.LENGTH_LONG).show();
+               // Toast.makeText(MyApplication.getAppContext(),city,Toast.LENGTH_LONG).show();
                 String name = accommodation.getString("name");
                 String website = accommodation.getString("website");
                 String type = accommodation.getString("type");
@@ -185,6 +186,18 @@ recyclerView= (RecyclerView) mView.findViewById(R.id.moviesList);
 
         });
         sendJsonRequest();
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent map = new Intent(getActivity(), SampleActivity.class);
+                      //  map.putExtra("ACCO", (Parcelable) myAcco.get(position));
+
+                        startActivity(map);
+                       // Toast.makeText(getActivity(),myAcco.get(position),Toast.LENGTH_SHORT).show();
+                    }
+                })
+        );
         return mView;
 
     }
